@@ -142,7 +142,7 @@ public class TintsDataGenerator implements IDataGenerator {
 
     @Override
     public JsonObject generateDataJson() {
-        DynamicRegistryManager registryManager = DynamicRegistryManager.create();
+        DynamicRegistryManager registryManager = DynamicRegistryManager.BUILTIN.get();
         Registry<Biome> biomeRegistry = registryManager.get(Registry.BIOME_KEY);
         Registry<Block> blockRegistry = registryManager.get(Registry.BLOCK_KEY);
 

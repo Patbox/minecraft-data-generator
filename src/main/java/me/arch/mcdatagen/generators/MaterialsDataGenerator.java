@@ -16,6 +16,7 @@ import net.minecraft.item.MiningToolItem;
 import net.minecraft.item.SwordItem;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.tag.Tag;
+import net.minecraft.tag.TagKey;
 import net.minecraft.util.registry.Registry;
 
 import java.util.*;
@@ -40,9 +41,8 @@ public class MaterialsDataGenerator implements IDataGenerator {
         return "materials";
     }
 
-    private static String makeMaterialNameForTag(Tag<Block> tag) {
-        Tag.Identified<Block> identifiedTag = (Tag.Identified<Block>) tag;
-        return identifiedTag.getId().getPath();
+    private static String makeMaterialNameForTag(TagKey<Block> tag) {
+        return tag.id().toString();
     }
 
     public static class MaterialInfo {
@@ -121,7 +121,7 @@ public class MaterialsDataGenerator implements IDataGenerator {
         Registry<Item> itemRegistry = Registry.ITEM;
         itemRegistry.forEach(item -> {
             if (item instanceof MiningToolItem toolItem) {
-                Tag<Block> effectiveBlocks = ((MiningToolItemAccessor) toolItem).getEffectiveBlocks();
+                TagKey<Block> effectiveBlocks = ((MiningToolItemAccessor) toolItem).getEffectiveBlocks();
                 String materialName = makeMaterialNameForTag(effectiveBlocks);
 
                 if (!uniqueMaterialNames.contains(materialName)) {
@@ -162,7 +162,7 @@ public class MaterialsDataGenerator implements IDataGenerator {
         itemRegistry.forEach(item -> {
             //Tools are handled rather easily and do not require anything else
             if (item instanceof MiningToolItem toolItem) {
-                Tag<Block> effectiveBlocks = ((MiningToolItemAccessor) toolItem).getEffectiveBlocks();
+                TagKey<Block> effectiveBlocks = ((MiningToolItemAccessor) toolItem).getEffectiveBlocks();
                 String materialName = makeMaterialNameForTag(effectiveBlocks);
 
                 Map<Item, Float> materialSpeeds = materialMiningSpeeds.computeIfAbsent(materialName, k -> new HashMap<>());

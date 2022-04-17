@@ -26,7 +26,7 @@ public abstract class ClientPlayerInteractionManagerMixin {
     @Unique
     private BlockState stateBeingBroken;
 
-    @Inject(method = "attackBlock", at = @At(value = "FIELD", target = "currentBreakingProgress:F", opcode = Opcodes.PUTFIELD))
+    @Inject(method = "attackBlock", at = @At(value = "FIELD", target = "Lnet/minecraft/client/network/ClientPlayerInteractionManager;currentBreakingProgress:F", opcode = Opcodes.PUTFIELD))
     private void onBlockAttacked(BlockPos pos, Direction direction, CallbackInfoReturnable<Boolean> callbackInfo) {
         World world = Preconditions.checkNotNull(client.world);
         this.blockBreakingStartTicks = world.getTime();

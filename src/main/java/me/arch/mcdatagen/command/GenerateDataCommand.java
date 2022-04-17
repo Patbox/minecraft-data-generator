@@ -13,7 +13,7 @@ import java.nio.file.Path;
 public class GenerateDataCommand {
 
     private static int executeCommand(CommandContext<ServerCommandSource> context) {
-        String versionName = MinecraftVersion.GAME_VERSION.getName();
+        String versionName = MinecraftVersion.CURRENT.getName();
         Path serverRootDirectory = context.getSource().getServer().getRunDirectory().toPath().toAbsolutePath();
         Path dataDumpDirectory = serverRootDirectory.resolve("minecraft-data").resolve(versionName);
 

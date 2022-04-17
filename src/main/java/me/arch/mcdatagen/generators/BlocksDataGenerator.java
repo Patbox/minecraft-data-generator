@@ -108,9 +108,9 @@ public class BlocksDataGenerator implements IDataGenerator {
     public JsonArray generateDataJson() {
         JsonArray resultBlocksArray = new JsonArray();
         Registry<Block> blockRegistry = Registry.BLOCK;
-        List<MaterialsDataGenerator.MaterialInfo> availableMaterials = MaterialsDataGenerator.getGlobalMaterialInfo();
+        //List<MaterialsDataGenerator.MaterialInfo> availableMaterials = MaterialsDataGenerator.getGlobalMaterialInfo();
 
-        blockRegistry.forEach(block -> resultBlocksArray.add(generateBlock(blockRegistry, availableMaterials, block)));
+        blockRegistry.forEach(block -> resultBlocksArray.add(generateBlock(blockRegistry, null/*availableMaterials*/, block)));
         return resultBlocksArray;
     }
 
@@ -150,7 +150,7 @@ public class BlocksDataGenerator implements IDataGenerator {
         blockDesc.addProperty("resistance", block.getBlastResistance());
         blockDesc.addProperty("stackSize", blockItem.getMaxCount());
         blockDesc.addProperty("diggable", block.getHardness() != -1.0f);
-        blockDesc.addProperty("material", findMatchingBlockMaterial(defaultState, materials));
+        /*blockDesc.addProperty("material", findMatchingBlockMaterial(defaultState, materials))*/;
 
         blockDesc.addProperty("transparent", !defaultState.isOpaque());
         blockDesc.addProperty("emitLight", defaultState.getLuminance());

@@ -6,12 +6,13 @@ import me.arch.mcdatagen.util.DataGeneratorUtils;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.DynamicRegistryManager;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryEntry;
 import net.minecraft.world.biome.Biome;
 
 public class BiomesDataGenerator implements IDataGenerator {
 
     private static String guessBiomeDimensionFromCategory(Biome biome) {
-        return switch (biome.getCategory()) {
+        return switch (Biome.getCategory((RegistryEntry.of(biome)))) {
             case NETHER -> "nether";
             case THEEND -> "end";
             default -> "overworld";
@@ -26,10 +27,9 @@ public class BiomesDataGenerator implements IDataGenerator {
         biomeDesc.addProperty("id", registry.getRawId(biome));
         biomeDesc.addProperty("name", registryKey.getPath());
 
-        biomeDesc.addProperty("category", biome.getCategory().getName());
+        biomeDesc.addProperty("category", Biome.getCategory((RegistryEntry.of(biome))).getName());
         biomeDesc.addProperty("temperature", biome.getTemperature());
         biomeDesc.addProperty("precipitation", biome.getPrecipitation().getName());
-        biomeDesc.addProperty("depth", biome.getDepth());
 
         biomeDesc.addProperty("dimension", guessBiomeDimensionFromCategory(biome));
         biomeDesc.addProperty("displayName", DataGeneratorUtils.translateText(localizationKey));
@@ -47,7 +47,7 @@ public class BiomesDataGenerator implements IDataGenerator {
     @Override
     public JsonArray generateDataJson() {
         JsonArray biomesArray = new JsonArray();
-        DynamicRegistryManager registryManager = DynamicRegistryManager.create();
+        DynamicRegistryManager registryManager = DynamicRegistryManager.BUILTIN.get();
         Registry<Biome> biomeRegistry = registryManager.get(Registry.BIOME_KEY);
 
         biomeRegistry.stream()
